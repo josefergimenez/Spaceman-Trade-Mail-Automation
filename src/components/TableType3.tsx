@@ -16,7 +16,7 @@ const TableType3: React.FC<Props> = ({
     clusters
 }) => {  
         return (
-    <table>
+    <table className="mt-2">
         <thead>
             <tr>
                 <th colSpan={4}>{title}</th>

@@ -1,5 +1,5 @@
 import { Cluster } from "../types";
-import { calculateColor } from "./helper";
+import { Arrow, calculateColor } from "./helper";
 
 type Props = {
     title: string,
@@ -19,7 +19,7 @@ const TableType1: React.FC<Props> = ({
 
         return (
 
-    <table className="border-2 border-black border-collapse">
+    <table className="border-2 border-black border-collapse w-[600px] mt-3">
         <thead className="bg-[#042362] text-white text-sm">
             <tr className="border-2 border-black border-collapse">
                 <th colSpan={4}>{title}</th>
@@ -30,10 +30,10 @@ const TableType1: React.FC<Props> = ({
         </thead>
         <tbody>
            <tr className="border-2 border-black border-collapse bg-[#042362] text-white text-xs">
-            <td></td>
-            <td>{fromDate}</td>
-            <td>{toDate}</td>
-            <td>VARIACION</td>
+            <td className="w-1/2"></td>
+            <td className="w-1/6">{fromDate}</td>
+            <td className="w-1/6">{toDate}</td>
+            <td className="w-1/6">VARIACION</td>
            </tr>
             {clusters.map((cluster, index) => (
                 <tr key={index}>
@@ -44,7 +44,9 @@ const TableType1: React.FC<Props> = ({
                     <td className="text-right text-sm"
                         style={{ backgroundColor: calculateColor(cluster.percentageTwo) }}
                         >{cluster.percentageTwo}%</td>
-                    <td className="text-right text-sm">{cluster.pp} p.p.</td>
+                    <td className="flex justify-between">
+                        <Arrow pp={String(cluster.pp)}/>
+                        <div className="text-right text-sm">{cluster.pp} p.p.</div></td>
                 </tr>
             ))} 
         </tbody>

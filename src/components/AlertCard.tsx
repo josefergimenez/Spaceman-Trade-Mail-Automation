@@ -10,8 +10,8 @@ const AlertCard: React.FC<Props> = ({
     zone
     }) => {  
         return (
-        <div className="flex border-2 bg-[#F6F6F4] border-primary">
-            <div className="w-2/5 text-center items-center justify-center flex text-4xl font-bold text-primary">
+        <div className="flex border-2 bg-[#F6F6F4] border-primary mt-2 w-[600px]">
+            <div className="w-2/5 text-center items-center justify-center flex text-3xl font-bold text-primary">
                 {zone}
             </div>
             <div className="w-3/5">
