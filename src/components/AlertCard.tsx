@@ -21,7 +21,7 @@ const AlertCard: React.FC<Props> = ({
                   <tbody>
                     <tr>
                         <td rowSpan={3} className="align-middle">
-                        <img 
+                        <img
                         className="h-32 w-auto" 
                         src={getUrlPorId(beer.id)}
                         alt={beer.id} />
@@ -45,6 +45,7 @@ const AlertCard: React.FC<Props> = ({
                       <span className={`${beer.pp > 0 ? 'text-green-600' :
                         beer.pp == 0 ? 'text-yellow-600' :
                         'text-red-600'} text-xl font-bold`}>
+
                         {beer.pp > 0 ? '+' : ''}{beer.pp} PP
                       </span>
                     </div>

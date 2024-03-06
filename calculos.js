@@ -38,12 +38,12 @@ async function main(dbClient) {
     const now = new Date();
     const year = now.getFullYear();
     const month = ('0' + (now.getMonth() + 1)).slice(-2);
-    const periodo = '202211'//`'${year}${month}'`;
+    const periodo = `${year}${month}`;
 
     const previousMonthDate = new Date(now.getFullYear(), now.getMonth() - 1, 1); // Resta 1 mes para obtener el mes anterior
     const yearPrev = previousMonthDate.getFullYear();
     const monthPrev = ('0' + (previousMonthDate.getMonth() + 1)).slice(-2); // Asegura el formato de dos dígitos
-    const periodoAnterior= '202211'//`'${yearPrev}${monthPrev}'`;
+    const periodoAnterior= `${yearPrev}${monthPrev}`;
 
     let dataPart1Botellas = [];
     let dataPart1Latas = [];
@@ -211,7 +211,6 @@ async function main(dbClient) {
             
         }
     }
-    console.log(response[0].dispersion)
     return response
 
 }
@@ -230,50 +229,49 @@ function respetePromediado(volumenNoRespeta, volumenRespeta, skuDisponible, skuR
     
 }
 
-const getSqlPeriodClause = (day) => {
-  const today = new Date();
-  const dayOfWeek = today.getDay(); 
-
-  let daysToSubtract;
-  let whereClause = '';
-
-  if (dayOfWeek === 1 || day == 'lunes') { // Lunes
-    // Jueves = 4, Viernes = 5, Sábado = 6, Domingo = 0
-    daysToSubtract = [3, 2, 1, 0].map(day => new Date(today.setDate(today.getDate() - day)).toISOString().split('T')[0]);
-    whereClause = `(fechayhoradelaencuesta BETWEEN '${daysToSubtract[3]}' AND '${daysToSubtract[0]}')`;
-  } else if (dayOfWeek === 4 || day == 'jueves') { // Jueves
-    // Lunes = 1, Martes = 2, Miércoles = 3
-    daysToSubtract = [2, 1, 0].map(day => new Date(today.setDate(today.getDate() - day)).toISOString().split('T')[0]);
-    whereClause = `(fechayhoradelaencuesta BETWEEN '${daysToSubtract[2]}' AND '${daysToSubtract[0]}')`;
-  }
-  return "(fechayhoradelaencuesta BETWEEN '2022-11-01' AND '2022-11-30')"
-  return whereClause;
-};
-
-const getPreviousPeriodClause = (day) => {
+const getSqlPeriodClause = () => {
   const today = new Date();
   const dayOfWeek = today.getDay();
+  let startDayOffset, endDayOffset;
 
-  let startDate, endDate;
-  let whereClause = '';
-
-  if (dayOfWeek === 1 || day === 'lunes') { 
-    startDate = new Date(today);
-    startDate.setDate(today.getDate() - (today.getDay() + 6));
-    endDate = new Date(startDate);
-    endDate.setDate(startDate.getDate() + 2); 
-  } else if (dayOfWeek === 4 || day === 'jueves') {
-    startDate = new Date(today);
-    startDate.setDate(today.getDate() - (today.getDay() - 1));
-    endDate = new Date(startDate);
-    endDate.setDate(startDate.getDate() + 2); 
+  // Ajusta el offset dependiendo del día actual
+  if (dayOfWeek === 1) { // Si hoy es lunes
+    startDayOffset = -3; // Jueves
+    endDayOffset = -1; // Sábado
+  } else {
+    startDayOffset = dayOfWeek === 0 ? -4 : -3; // Si es domingo, ajustar al viernes
+    endDayOffset = dayOfWeek === 0 ? -2 : -1;
   }
 
-  if (startDate && endDate) {
-    whereClause = `(fechayhoradelaencuesta BETWEEN '${startDate.toISOString().split('T')[0]}' AND '${endDate.toISOString().split('T')[0]}')`;
+  // Calcula el rango de fechas
+  let startDate = new Date();
+  startDate.setDate(today.getDate() + startDayOffset);
+  let endDate = new Date();
+  endDate.setDate(today.getDate() + endDayOffset);
+
+  return `(fechayhoradelaencuesta BETWEEN '${startDate.toISOString().split('T')[0]}' AND '${endDate.toISOString().split('T')[0]}')`;
+};
+
+const getPreviousPeriodClause = () => {
+  const today = new Date();
+  const dayOfWeek = today.getDay();
+  let startDayOffset, endDayOffset;
+
+  if (dayOfWeek === 1) { // Si hoy es lunes
+    startDayOffset = -6; // Domingo de la semana pasada
+    endDayOffset = -4; // Viernes de la semana pasada
+  } else {
+    startDayOffset = dayOfWeek === 0 ? -7 : -6; // Si es domingo, ajustar al jueves de la semana pasada
+    endDayOffset = dayOfWeek === 0 ? -5 : -4;
   }
-  return "(fechayhoradelaencuesta BETWEEN '2022-11-01' AND '2022-11-30')"
-  return whereClause;
+
+  // Calcula el rango de fechas para el período anterior
+  let startDate = new Date();
+  startDate.setDate(today.getDate() + startDayOffset);
+  let endDate = new Date();
+  endDate.setDate(today.getDate() + endDayOffset);
+
+  return `(fechayhoradelaencuesta BETWEEN '${startDate.toISOString().split('T')[0]}' AND '${endDate.toISOString().split('T')[0]}')`;
 };
 
 function getSqlDateRangeForCurrentAndPreviousMonths(periodsBack = 5) {
@@ -299,7 +297,7 @@ function getSqlDateRangeForCurrentAndPreviousMonths(periodsBack = 5) {
     const endDay = ('0' + endPeriodDate.getDate()).slice(-2);
     const endDate = `${endYear}-${endMonth}-${endDay}`;
 
-    return "(fechayhoradelaencuesta BETWEEN '2022-11-01' AND '2022-11-30')"
+    //return "(fechayhoradelaencuesta BETWEEN '2022-11-01' AND '2022-11-30')"
     return `(fechayhoradelaencuesta BETWEEN '${startDate}' AND '${endDate}')`;
 }
 

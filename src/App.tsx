@@ -8,30 +8,8 @@ import DispersionImage from './components/DispersionImage';
 import StackedBarsChart from './components/StackedBarsChart';
 import TableType1 from './components/TableType1';
 import TableType2 from './components/TableType2';
-import { Beer, BeerDispersion, Cluster, ClusterWithProducts } from './types';
+import { BeerDispersion, ClusterWithProducts } from './types';
 
-const data: Beer = {
-    id: 'hola',
-    percentage: 90.2,
-    pp: 0.0,
-    }
-
-const data2: Cluster = {
-    name: 'VARI',
-    percentageOne: 100,
-    percentageTwo: 90,
-    pp: 2.2
-    }
-
-const data3: ClusterWithProducts = {
-    zone: [{
-        name: "Centro Mbarete",
-        product: [{
-        name: "string",
-        percentageOne: 92.2,
-        percentageTwo: 82.2,
-        pp: 1.32
-        }]}]}
 
 const data4: BeerDispersion[] = [{
    id: "123",
@@ -59,16 +37,6 @@ const data4: BeerDispersion[] = [{
    price: "7.500"
 },]
 
-interface ProductItem {
-  name: string;
-  zona: string;
-  botella?: number;
-  lata?: number;
-  respeteActual: number;
-  respeteAnterior: number;
-  // Agrega cualquier otra propiedad relevante que tengan tus objetos
-}
-
 const calculateAverages = (table:any) => {
   Object.keys(table).forEach(groupKey => {
     table[groupKey].forEach((item: any) => {
@@ -93,9 +61,10 @@ export default function App() {
 
     const divRef = useRef<HTMLDivElement>(null);
     const [clientSQL, setClientSQL] = useState('Cargando');
+    const [e, setE] = useState('error')
 
     const saveImage = () => {
-      const node = document.getElementById('main'); // Replace 'elementId' with your element's ID
+      const node = document.getElementById('main'); 
     
         if (!node) {return}
 
@@ -106,6 +75,7 @@ export default function App() {
           saveAs(dataUrl, 'output.png');
         })
         .catch((error) => {
+          setE(error)
           console.error('Error:', error);
         });
     };
@@ -123,7 +93,7 @@ export default function App() {
         };
 
         testConnection();
-    }, []); // El array vacío asegura que esto se ejecute solo una vez al montar el componente
+    }, []); 
 
     if (clientSQL === 'Cargando') {
     return (
