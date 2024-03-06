@@ -194,7 +194,6 @@ export default function App() {
       INTERIOR: {}
     };
 
-
     dataObject.forEach((producto: any) => {
         if('lata' in producto) {
             //PARTE 1 LATA
@@ -227,7 +226,7 @@ export default function App() {
                 : "N/A";
                     
                 const alertObject = {
-                    'id': producto.lata,
+                    'id': producto.botella,
                     'percentage': (producto.respeteActual * 100).toFixed(1),
                     'pp': changePercentage,
                 };
@@ -289,6 +288,8 @@ export default function App() {
         item.percentageTwo = (item.respeteActual * 100).toFixed(1)
         item.pp = ((item.percentageTwo-item.percentageOne)*100).toFixed(1)
         })
+
+    // return <div>{JSON.stringify(dataObject)}</div>
     dataObject.forEach((item: any) => {
       const container = item.name.includes("LATA") ? table2Latas : table2Botellas;
       
@@ -364,10 +365,9 @@ export default function App() {
 
     const clusterWithProducts3 = transformToClusterWithProducts(organizedData.METRO);
     const clusterWithProducts4 = transformToClusterWithProducts(organizedData.INTERIOR);
-    try { 
+    try {
     return (
     <div>  
-
     <div id="main" ref={divRef} className="w-[600px] justify-items-center grid bg-white">
         <Fragment>
           {Object.keys(lataAlert).map((key) => (
@@ -455,26 +455,31 @@ export default function App() {
      toDate={getCurrentMonthFormatted()}
      data={clusterWithProducts4}
      />   
+    <p className="mt-8 w-2/5 text-center items-center justify-center flex text-2xl font-bold text-primary">DISPERSIÓN</p>
+    <p className='text-[#082a39] mt-1'>
+    Dispersión de precios físicos por región.</p>
 
      <DispersionImage
         zone="PTC"
         beers={data4}        
      />
 
-          <Fragment>
-            {
-              dataObject.map((item, index) => (
-                    item.respeteActual < 0.85 && item.respeteActual > 0 ? (
-                      <StackedBarsChart
-                        zone={item.zona}
-                        product={item.botella || item.lata}
-                        labels={[]}
-                        data={item.dispersion}
-                     />
-                ) : null
-              ))
-            }
-          </Fragment>
+        <Fragment>
+        {
+          dataObject.map((item, index) => (
+                item.respeteActual < 0.85 && item.respeteActual > 0 ? (
+                  <StackedBarsChart
+                    zone={item.zona}
+                    product={item.botella || item.lata}
+                    labels={[]}
+                    data={item.dispersion}
+                 />
+            ) : null
+          ))
+        }
+      </Fragment>
+
+
      </div>
      <div className='flex w-[600px] justify-center'>
         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full my-6"

@@ -24,7 +24,7 @@ const transformData = (originalData: DataItem[]): TransformedDataItem[] => {
   const dataByPeriodo: { [key: string]: TransformedDataItem } = {};
 
   originalData.forEach(item => {
-    const porcentaje = (parseInt(item.cantidad, 10) / totalCantidad) * 100;
+    const porcentaje = parseFloat((parseInt(item.cantidad, 10) / totalCantidad * 100).toFixed(1));
     const periodoKey = item.periodo.toString();
     const priceKey = `${item.precioskusinpromo}`;
 
@@ -54,23 +54,27 @@ const StackedBarsChart: React.FC<StackedBarsChartProps> = ({
   labels,
   data,
 }) => {
-  const colors = ["#11239D", "#E56C37", "#C8A001", "#9171CD", "#148CFE", "#BF5CCA", "#6B007A", "#EC7677"];
+
+  const colors = ["#11239D", "#E56C37", "#C8A001", "#9171CD", "#148CFE", "#BF5CCA", "#6B007A", "#EC7677", "#5EAE9E", "#D32F2F", "#FFC107", "#009688"];
+ 
  //@ts-ignore
   const dataTransformada = transformData(data);
 
   const keys = Array.from(new Set(dataTransformada.flatMap(item => Object.keys(item).filter(key => key !== 'name'))));
 
   return (
-    <div className='mt-5 w-[600px]'>
+    <div className='mt-5 w-[600px] border'>
+    
     <div className="flex justify-between w-full">
-      <p className='bg-primary text-white p-2 rounded'>{zone.toUpperCase()}</p>
       <p className='bg-primary text-white p-2 rounded'>{NAMES[product]}</p>
+      <p className='bg-primary text-white p-2 rounded'>{zone.toUpperCase()}</p>
     </div>
-            <BarChart width={600} height={500} data={data}>
+    <p className='mt-2 bg-primary text-white text-center'>A QUE PRECIO VENDEN LOS PDV?</p>
+            <BarChart width={600} height={500} data={dataTransformada}>
                 <XAxis dataKey="name" />
                 <Legend />
                 {keys.map((key, index) => (
-                    <Bar key={key} dataKey={key} stackId="a" fill={colors[index % colors.length]}>
+                    <Bar dataKey={key} stackId="a" fill={colors[index % colors.length]}>
                         <LabelList dataKey={key} position="inside" formatter={(value: number) => `${value}%`} style={{ fill: 'white' }}/>
                     </Bar>
                 ))}
