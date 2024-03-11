@@ -1,8 +1,5 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('electronAPI', {
-    getData: () => ipcRenderer.invoke('database-connection'),
-    // Puedes exponer más funciones según sea necesario
+    getData: (from1, to1, from2, to2) => ipcRenderer.invoke('database-connection', { from1, to1, from2, to2 }),
 });
-
-

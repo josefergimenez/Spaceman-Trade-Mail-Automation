@@ -9,6 +9,7 @@ import StackedBarsChart from './components/StackedBarsChart';
 import TableType1 from './components/TableType1';
 import TableType2 from './components/TableType2';
 import { BeerDispersion, ClusterWithProducts } from './types';
+import FormDate from './components/FormDate';
 
 
 const data4: BeerDispersion[] = [{
@@ -58,10 +59,52 @@ const calculateAverages = (table:any) => {
 
 const METRO = ["SALA BODEGAS", "CENTRO MBARETE", "GRAN ASU"]
 export default function App() {
-
-    const divRef = useRef<HTMLDivElement>(null);
+    
+    const [isFormActive, setIsFormActive] = useState(true);
     const [clientSQL, setClientSQL] = useState('Cargando');
     const [e, setE] = useState('error')
+    const [startDate1, setStartDate1] = useState<Date | null>(null);
+    const [endDate1, setEndDate1] = useState<Date | null>(null);
+    const [startDate2, setStartDate2] = useState<Date | null>(null);
+    const [endDate2, setEndDate2] = useState<Date | null>(null);
+    const isFormActivePrevious = useRef<boolean>(isFormActive);
+
+      useEffect(() => {
+        if (isFormActivePrevious.current && !isFormActive) {
+          const testConnection = async () => {
+            try {
+              const response = await window.electronAPI.getData(startDate1, endDate1, startDate2, endDate2);
+              setClientSQL(JSON.stringify(response));
+            } catch (error: any) {
+              console.error("Error al conectar con la base de datos", error);
+              setClientSQL(error.message);
+            }
+          };
+
+          testConnection();
+        }
+
+        isFormActivePrevious.current = isFormActive;
+      }, [isFormActive]);
+    
+    if (isFormActive){
+        return <div className='flex justify-center items-center h-screen'>
+        <FormDate
+          startDate1={startDate1}
+          setStartDate1={setStartDate1}
+          endDate1={endDate1}
+          setEndDate1={setEndDate1}
+          startDate2={startDate2}
+          setStartDate2={setStartDate2}
+          endDate2={endDate2}
+          setEndDate2={setEndDate2}
+          setIsFormActive={setIsFormActive}
+        />
+      </div>
+ 
+
+    }
+
 
     const saveImage = () => {
       const node = document.getElementById('main'); 
@@ -81,19 +124,19 @@ export default function App() {
     };
 
 
-    useEffect(() => {
-        const testConnection = async () => {
-            try {
-                const response = await window.electronAPI.getData()
-                setClientSQL(JSON.stringify(response));
-            } catch (error: any) {
-                console.error("Error al conectar con la base de datos", error);
-                setClientSQL(error.message);
-            } 
-        };
+    //useEffect(() => {
+    //    const testConnection = async () => {
+    //        try {
+    //            const response = await window.electronAPI.getData()
+    //            setClientSQL(JSON.stringify(response));
+    //        } catch (error: any) {
+    //            console.error("Error al conectar con la base de datos", error);
+    //            setClientSQL(error.message);
+    //        } 
+    //    };
 
-        testConnection();
-    }, []); 
+     //   testConnection();
+    //}, []); 
 
     if (clientSQL === 'Cargando') {
     return (
@@ -338,7 +381,7 @@ export default function App() {
     try {
     return (
     <div>  
-    <div id="main" ref={divRef} className="w-[600px] justify-items-center grid bg-white">
+    <div id="main" className="w-[600px] justify-items-center grid bg-white">
         <Fragment>
           {Object.keys(lataAlert).map((key) => (
             <AlertCard
@@ -436,7 +479,7 @@ export default function App() {
 
         <Fragment>
         {
-          dataObject.map((item, index) => (
+          dataObject.map((item: any, index: any) => (
                 item.respeteActual < 0.85 && item.respeteActual > 0 ? (
                   <StackedBarsChart
                     zone={item.zona}
@@ -467,7 +510,9 @@ catch {
             <div className="bg-orange-500 text-white p-4 rounded-lg text-2xl">
               Por favor, compruebe los datos esperados 
             </div>
+
           </div>
+
     )
     }
 }

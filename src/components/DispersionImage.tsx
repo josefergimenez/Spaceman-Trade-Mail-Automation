@@ -4,7 +4,6 @@ import { BeerDispersion } from "../types"
 type Props = {
     zone: string,
     beers: BeerDispersion[]
-    
 }
 
 const DispersionImage: React.FC<Props> = ({

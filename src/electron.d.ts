@@ -3,7 +3,12 @@
 declare global {
   interface Window {
     electronAPI: {
-      getData: () => Promise<any>;
+      getData: (
+        from1: Date | null,
+        to1: Date | null,
+        from2: Date | null,
+        to2: Date | null
+      ) => Promise<any>;
     };
   }
 }
