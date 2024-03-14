@@ -423,41 +423,42 @@ export default function App() {
     <TableType1 
     title="VARIACION MTD DE LAS TRILITRO"
     zone="METRO"
-    fromDate={getLastBusinessDayExcludingSundays()}
-    toDate={getTodayFormatted()}
+    fromDate={textDate1}
+    toDate={textDate2}
     clusters={METROArray}
     />
     <TableType1 
     title="VARIACION MTD DE LAS TRILITRO"
     zone="INTERIOR"
-    fromDate={getLastBusinessDayExcludingSundays()}
-    toDate={getTodayFormatted()}
+    fromDate={textDate1}
+    toDate={textDate2}
     clusters={INTERIORArray}
     />
     <TableType1 
     title="Promedio Respete"
     zone="METRO"
-    fromDate={getLastBusinessDayExcludingSundays()}
-    toDate={getTodayFormatted()}
+    fromDate={textDate1}
+    toDate={textDate2}
+
     clusters={table2Botellas.METRO}
     />
     <TableType1 
     title="Promedio Respete"
     zone="INTERIOR"
-    fromDate={getLastBusinessDayExcludingSundays()}
-    toDate={getTodayFormatted()}
+    fromDate={textDate1}
+    toDate={textDate2}
     clusters={table2Botellas.INTERIOR}
     />
     <TableType2
      title="METRO"
-     fromDate={getLastBusinessDayExcludingSundays()}
-     toDate={getTodayFormatted()}
+    fromDate={textDate1}
+    toDate={textDate2}
      data={clusterWithProducts1}
      />
      <TableType2
      title="INTERIOR"
-     fromDate={getLastBusinessDayExcludingSundays()}
-     toDate={getTodayFormatted()}
+    fromDate={textDate1}
+    toDate={textDate2}
      data={clusterWithProducts2}
      />   
     <p className="mt-5 w-2/5 text-center items-center justify-center flex text-2xl font-bold text-primary">PROMEDIO RESPETE VS MES ANTERIOR</p>
