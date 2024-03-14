@@ -11,7 +11,16 @@ type Props = {
     setEndDate1: (date: Date | null)=> void,
     setStartDate2: (date: Date | null)=> void,
     setEndDate2: (date: Date | null)=> void,
+    startDate12: Date | null,
+    startDate22: Date | null,
+    endDate12: Date | null,
+    endDate22: Date | null,
+    setStartDate12: (date: Date | null)=> void,
+    setEndDate12: (date: Date | null)=> void,
+    setStartDate22: (date: Date | null)=> void,
+    setEndDate22: (date: Date | null)=> void,
     setIsFormActive: (val: boolean) => void 
+
 }
 
 const FormDate: React.FC<Props> = (
@@ -24,6 +33,14 @@ const FormDate: React.FC<Props> = (
       setStartDate2,
       setEndDate1,
       setStartDate1,
+      startDate22,
+      startDate12,
+      endDate12,
+      endDate22,
+      setEndDate22,
+      setStartDate22,
+      setEndDate12,
+      setStartDate12,
       setIsFormActive
     }) => {
 
@@ -92,12 +109,72 @@ const FormDate: React.FC<Props> = (
         </div>
       </div>
 
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="text-sm font-semibold text-gray-600 block mb-2">FECHA 1 (DESDE):</label>
+          <DatePicker
+            selected={startDate12}
+            onChange={date => setStartDate12(date)}
+            selectsStart
+            startDate={startDate12}
+            endDate={endDate12}
+            maxDate={new Date()}
+            dateFormat="dd/MM/yyyy"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+        <div>
+          <label className="text-sm font-semibold text-gray-600 block mb-2">FECHA 1 (HASTA):</label>
+          <DatePicker
+            selected={endDate12}
+            onChange={date => setEndDate12(date)}
+            selectsEnd
+            startDate={startDate12}
+            endDate={endDate12}
+            maxDate={new Date()}
+            dateFormat="dd/MM/yyyy"
+            minDate={startDate12}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+      </div>
+
+      {/* Fecha 2 Range */}
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="text-sm font-semibold text-gray-600 block mb-2">FECHA 2 (DESDE):</label>
+          <DatePicker
+            selected={startDate22}
+            onChange={date => setStartDate22(date)}
+            selectsStart
+            startDate={startDate22}
+            endDate={endDate22}
+            maxDate={new Date()}
+            dateFormat="dd/MM/yyyy"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+        <div>
+          <label className="text-sm font-semibold text-gray-600 block mb-2">FECHA 2 (HASTA):</label>
+          <DatePicker
+            selected={endDate22}
+            onChange={date => setEndDate22(date)}
+            selectsEnd
+            startDate={startDate22}
+            endDate={endDate22}
+            maxDate={new Date()}
+            dateFormat="dd/MM/yyyy"
+            minDate={startDate22}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+      </div>
       {/* Submit Button */}
       <div className="flex justify-center">
         <button
           type="submit"
           className="py-2 px-4 text-white font-semibold rounded-lg shadow-md hover:bg-primary-700 focus:outline-none bg-primary"
-          disabled={!startDate1 || !startDate2 || !endDate1 || !endDate2}
+          disabled={!startDate1 || !startDate2 || !endDate1 || !endDate2 || !startDate12 || !startDate22 || !endDate12 || !endDate22}
           onClick={()=>setIsFormActive(false)}
         >
           Generar

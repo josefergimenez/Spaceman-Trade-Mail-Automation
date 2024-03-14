@@ -1,15 +1,15 @@
 
 const BOTELLAS = [21170, 21175, 21181, 21187]
-const LATAS = [21176, 21171, 21178, 21188]
+const LATAS = [21167, 21150, 21178, 21189]
 const NAMES = {
     21170: "01- PILSEN 940 BOTELLA RETORNABLE",
     21175: "02- BRAHMA 940 BOTELLA RETORNABLE",
     21181: "03- OURO FINO 940 BOTELLA RETORNABLE",
     21187: "04- SKOL LITRO",
-    21171: "01- PILSEN EXTRA 269 LATA",
-    21176: "02- BRAHMA SZ 269 LATA",
+    21167: "01- PILSEN 269 LATA",
+    22350: "02- BRAHMA 269 LATA",
     21178: "03- OURO FINO 269 LATA",
-    21188: "05- BUD 66 269 LATA",
+    21189: "05- BUD 66 310 LATA",
 
 }
 const TABLE = '"public"."tabla_prueba"'
@@ -27,12 +27,15 @@ const ZONAS = [
     {value: 14, label: "CAAGUAZU"},
 ]
 
-async function main(dbClient, from1, to1, from2, to2) {
+async function main(dbClient, from1, to1, from2, to2, from12, to12, from22, to22) {
     //return MOCKDATA
     const response = [];
     //CONDICION WHERE PARA LA BUSQUEDA EN LA DB
     const periodQuery = getSqlPeriodClause(from2,to2)
-    const periodPrevQuery = getPreviousPeriodClause(from1,to1)
+    const periodPrevQuery = getSqlPeriodClause(from1,to1)
+
+    const periodQuery2 = getSqlPeriodClause(from22,to22)
+    const periodPrevQuery2 = getSqlPeriodClause(from12,to12)
 
     const now = new Date();
     const year = now.getFullYear();
@@ -54,8 +57,8 @@ async function main(dbClient, from1, to1, from2, to2) {
               idlineaproducto AS botella,
               SUM(CASE WHEN respetanorespeta = 'RESPETA' AND tienedisponible <> 'NO VENDE' AND ${periodQuery} THEN 1 ELSE 0 END) AS total_respeto_actual,
               SUM(CASE WHEN respetanorespeta = 'RESPETA' AND tienedisponible <> 'NO VENDE' AND ${periodPrevQuery} THEN 1 ELSE 0 END) AS total_respeto_anterior,
-              SUM(CASE WHEN tienedisponible <> 'NO VENDE' AND ${periodQuery} THEN 1 ELSE 0 END) AS total_disponible_actual,
-              SUM(CASE WHEN tienedisponible <> 'NO VENDE' AND ${periodPrevQuery} THEN 1 ELSE 0 END) AS total_disponible_anterior,
+              SUM(CASE WHEN tienedisponible <> 'No vende' AND ${periodQuery} THEN 1 ELSE 0 END) AS total_disponible_actual,
+              SUM(CASE WHEN tienedisponible <> 'No vende' AND ${periodPrevQuery} THEN 1 ELSE 0 END) AS total_disponible_anterior,
               SUM(CASE WHEN respetanorespeta = 'RESPETA' AND ${periodQuery} THEN volpromediomensual ELSE 0 END) AS total_respeta_volumen_actual,
               SUM(CASE WHEN respetanorespeta = 'NO RESPETA' AND ${periodQuery} THEN volpromediomensual ELSE 0 END) AS total_no_respeta_volumen_actual,
               SUM(CASE WHEN respetanorespeta = 'RESPETA' AND ${periodPrevQuery} THEN volpromediomensual ELSE 0 END) AS total_respeta_volumen_anterior,
@@ -99,6 +102,46 @@ async function main(dbClient, from1, to1, from2, to2) {
                 });
             }
 
+    }
+    query = `SELECT
+              id4 AS zona,
+              idlineaproducto AS botella,
+              SUM(CASE WHEN respetanorespeta = 'RESPETA' AND tienedisponible <> 'NO VENDE' AND ${periodQuery2} THEN 1 ELSE 0 END) AS total_respeto_actual,
+              SUM(CASE WHEN respetanorespeta = 'RESPETA' AND tienedisponible <> 'NO VENDE' AND ${periodPrevQuery2} THEN 1 ELSE 0 END) AS total_respeto_anterior,
+              SUM(CASE WHEN tienedisponible <> 'No vende' AND ${periodQuery2} THEN 1 ELSE 0 END) AS total_disponible_actual,
+              SUM(CASE WHEN tienedisponible <> 'No vende' AND ${periodPrevQuery2} THEN 1 ELSE 0 END) AS total_disponible_anterior,
+              SUM(CASE WHEN respetanorespeta = 'RESPETA' AND ${periodQuery2} THEN volpromediomensual ELSE 0 END) AS total_respeta_volumen_actual,
+              SUM(CASE WHEN respetanorespeta = 'NO RESPETA' AND ${periodQuery2} THEN volpromediomensual ELSE 0 END) AS total_no_respeta_volumen_actual,
+              SUM(CASE WHEN respetanorespeta = 'RESPETA' AND ${periodPrevQuery2} THEN volpromediomensual ELSE 0 END) AS total_respeta_volumen_anterior,
+              SUM(CASE WHEN respetanorespeta = 'NO RESPETA' AND ${periodPrevQuery2} THEN volpromediomensual ELSE 0 END) AS total_no_respeta_volumen_anterior
+            FROM
+              ${TABLE}
+            WHERE
+              (${periodQuery} OR ${periodPrevQuery})
+            GROUP BY
+              id4,
+              idlineaproducto;`
+
+        resultadosAgrupados = await dbClient.query(query);
+        for (let resultado of resultadosAgrupados) {
+            let valRespPromActual = respetePromediado(
+                resultado.total_no_respeta_volumen_actual,
+                resultado.total_respeta_volumen_actual,
+                resultado.total_disponible_actual,
+                resultado.total_respeto_actual
+            );
+
+            let valRespPromAnterior = respetePromediado(
+                resultado.total_no_respeta_volumen_anterior,
+                resultado.total_respeta_volumen_anterior,
+                resultado.total_disponible_anterior,
+                resultado.total_respeto_anterior
+            );
+
+            let zonaLabel = obtenerZonaLabelPorId(resultado.zona);
+
+            let botellaNombre = NAMES[resultado.botella];
+    
             if (botellaNombre && botellaNombre.includes("LATA")) { 
                 response.push({
                     name: botellaNombre,
@@ -121,6 +164,7 @@ async function main(dbClient, from1, to1, from2, to2) {
         GROUP BY idlineaproducto, id4, periodo, precioskusinpromo
         ORDER BY periodo DESC, COUNT(*) DESC;
     `;
+    console.log(query)
     let resultadosDispersión = await dbClient.query(query);
     for (let resultado of resultadosDispersión) {
         let zonaLabel = obtenerZonaLabelPorId(resultado.id4);

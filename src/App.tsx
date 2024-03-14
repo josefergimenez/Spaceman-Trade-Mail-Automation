@@ -67,13 +67,24 @@ export default function App() {
     const [endDate1, setEndDate1] = useState<Date | null>(null);
     const [startDate2, setStartDate2] = useState<Date | null>(null);
     const [endDate2, setEndDate2] = useState<Date | null>(null);
+    
+    const [textDate1, setTextDate1] = useState('DIA1') 
+    const [textDate2, setTextDate2] = useState('DIA2')
+    const [textDate3, setTextDate3] = useState('DIA3')
+    const [textDate4, setTextDate4] = useState('DIA4') 
+
+    const [startDate12, setStartDate12] = useState<Date | null>(null);
+    const [endDate12, setEndDate12] = useState<Date | null>(null);
+    const [startDate22, setStartDate22] = useState<Date | null>(null);
+    const [endDate22, setEndDate22] = useState<Date | null>(null);
+
     const isFormActivePrevious = useRef<boolean>(isFormActive);
 
       useEffect(() => {
         if (isFormActivePrevious.current && !isFormActive) {
           const testConnection = async () => {
             try {
-              const response = await window.electronAPI.getData(startDate1, endDate1, startDate2, endDate2);
+              const response = await window.electronAPI.getData(startDate1, endDate1, startDate2, endDate2,startDate12, endDate12, startDate22, endDate22);
               setClientSQL(JSON.stringify(response));
             } catch (error: any) {
               console.error("Error al conectar con la base de datos", error);
@@ -99,6 +110,14 @@ export default function App() {
           endDate2={endDate2}
           setEndDate2={setEndDate2}
           setIsFormActive={setIsFormActive}
+          startDate12={startDate12}
+          setStartDate12={setStartDate12}
+          endDate12={endDate12}
+          setEndDate12={setEndDate12}
+          startDate22={startDate22}
+          setStartDate22={setStartDate22}
+          endDate22={endDate22}
+          setEndDate22={setEndDate22}
         />
       </div>
  
@@ -216,8 +235,8 @@ export default function App() {
                     }
 
                 const changePercentage = (producto.respeteAnterior != null) ? 
-                ((producto.respeteActual - producto.respeteAnterior) * 100).toFixed(1) 
-                : "N/A";
+                ((producto.respeteActual - producto.respeteAnterior)).toFixed(1) 
+                : "0.0";
                     
                 const alertObject = {
                     'id': producto.lata,
@@ -235,8 +254,8 @@ export default function App() {
                     }
 
                 const changePercentage = (producto.respeteAnterior != null) ? 
-                ((producto.respeteActual - producto.respeteAnterior) * 100).toFixed(1) 
-                : "N/A";
+                ((producto.respeteActual - producto.respeteAnterior)).toFixed(1) 
+                : "0.0";
                     
                 const alertObject = {
                     'id': producto.botella,

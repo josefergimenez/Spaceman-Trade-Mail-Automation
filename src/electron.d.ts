@@ -7,7 +7,11 @@ declare global {
         from1: Date | null,
         to1: Date | null,
         from2: Date | null,
-        to2: Date | null
+        to2: Date | null,
+        from12: Date | null,
+        to12: Date | null,
+        from22: Date | null,
+        to22: Date | null
       ) => Promise<any>;
     };
   }

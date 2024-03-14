@@ -55,7 +55,7 @@ app.on('activate', () => {
 });
 
 
-ipcMain.handle('database-connection', async (event, { from1, to1, from2, to2 }) => {
+ipcMain.handle('database-connection', async (event, { from1, to1, from2, to2, from12, to12, from22, to22 }) => {
     
     const DATABASE_URL = 'postgres://uzqhyrix:4hqkhucfrgKVd1LywjfXNYLPaDQBhojX@lallah.db.elephantsql.com/uzqhyrix';
     // Configuración de la fuente de datos fuera de la función
@@ -67,7 +67,7 @@ ipcMain.handle('database-connection', async (event, { from1, to1, from2, to2 }) 
     try {
         await AppDataSource.initialize();
         console.log("Connection to the database has been established successfully.");
-        return main(AppDataSource, from1, to1, from2, to2); // Cambiado para devolver un booleano indicando éxito
+        return main(AppDataSource, from1, to1, from2, to2, from12, to12, from22, to22); // Cambiado para devolver un booleano indicando éxito
     } catch (error) {
         console.error("Unable to connect to the database:", error);
         return error.message; // Cambiado para devolver un booleano indicando fracaso
