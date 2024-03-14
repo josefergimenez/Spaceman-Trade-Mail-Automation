@@ -117,7 +117,7 @@ async function main(dbClient, from1, to1, from2, to2, from12, to12, from22, to22
             FROM
               ${TABLE}
             WHERE
-              (${periodQuery} OR ${periodPrevQuery})
+              (${periodQuery2} OR ${periodPrevQuery2})
             GROUP BY
               id4,
               idlineaproducto;`
