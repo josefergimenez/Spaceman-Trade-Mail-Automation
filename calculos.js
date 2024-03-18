@@ -70,6 +70,7 @@ async function main(dbClient, from1, to1, from2, to2, from12, to12, from22, to22
             GROUP BY
               id4,
               idlineaproducto;`
+
        console.log(query) 
         let resultadosAgrupados = await dbClient.query(query);
         for (let resultado of resultadosAgrupados) {
@@ -234,7 +235,7 @@ function respetePromediado(volumenNoRespeta, volumenRespeta, skuDisponible, skuR
 const getSqlPeriodClause = (startDate1, endDate1) => {
   const formatISODate = (date) => date.toISOString().split('T')[0];
 
-  let clause = `(fechayhoradelaencuesta BETWEEN '${formatISODate(startDate1)}' AND '${formatISODate(endDate1)}')`;
+  let clause = `(fechayhoradelaencuesta >= '${formatISODate(startDate1)}' AND fechayhoradelaencuesta <= '${formatISODate(endDate1)}')`;
 
   return clause 
 };

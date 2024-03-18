@@ -25,14 +25,14 @@ const DispersionImage: React.FC<Props> = ({
                     <td>
                         <img 
                             className="h-32 w-auto" 
-                            src="https://mcusercontent.com/dd5cd43b1cf512f035a1166fc/images/dfd2e38e-4a82-0c8a-19ac-e3aab4254468.png"
+                            src="/21178.png"
                             />
                     </td>                    
                 <td className="text-center text-xl font-bold text-primary ">{beers[0].price} Gs.</td>
                     <td>
                         <img 
                             className="h-32 w-auto" 
-                            src="https://mcusercontent.com/dd5cd43b1cf512f035a1166fc/images/a8fc35d6-15f5-3bfc-07ff-ada88dd130a6.png"
+                            src="/21167.png"
                             />
                     </td>
                     <td className="text-center text-xl font-bold text-primary">{beers[1].price} Gs.</td>
@@ -41,7 +41,7 @@ const DispersionImage: React.FC<Props> = ({
                     <td>
                         <img 
                             className="h-32 w-auto" 
-                            src="https://mcusercontent.com/dd5cd43b1cf512f035a1166fc/images/0b35f388-1910-3cc3-2465-48b9d629b770.png"
+                            src="/21189.png"
                             />
 
                     </td>
@@ -49,7 +49,7 @@ const DispersionImage: React.FC<Props> = ({
                     <td>
                         <img 
                             className="h-32 w-auto" 
-                            src="https://mcusercontent.com/dd5cd43b1cf512f035a1166fc/images/272967a3-495c-2b18-a8a0-4796dfbd3446.png"
+                            src="/21150.png"
                             />
 
                     </td>
@@ -59,7 +59,7 @@ const DispersionImage: React.FC<Props> = ({
                     <td>
                         <img 
                             className="h-32 w-auto mt-12" 
-                            src="https://mcusercontent.com/dd5cd43b1cf512f035a1166fc/images/dd429c80-ee5d-5240-491e-fa5084b94154.png"
+                            src="/21181.png"
                             />
 
                     </td>
@@ -67,7 +67,7 @@ const DispersionImage: React.FC<Props> = ({
                     <td>
                         <img 
                             className="h-32 w-auto mt-12" 
-                            src="https://mcusercontent.com/dd5cd43b1cf512f035a1166fc/images/2848da88-cb23-cd4b-a3b6-7fd980019c7f.png"
+                            src="21187.png"
                             />
 
                     </td>
@@ -77,7 +77,7 @@ const DispersionImage: React.FC<Props> = ({
                     <td>
                         <img 
                             className="h-32 w-auto mt-12" 
-                            src="https://mcusercontent.com/dd5cd43b1cf512f035a1166fc/images/ee0dcf02-6a37-ed9e-d75b-709a27823d99.png"
+                            src="21170.png"
                             />
 
                     </td>
@@ -85,7 +85,7 @@ const DispersionImage: React.FC<Props> = ({
                     <td>
                         <img 
                             className="h-32 w-auto mt-12" 
-                            src="https://mcusercontent.com/dd5cd43b1cf512f035a1166fc/images/33a3bed5-c943-9c0b-caae-8227778e6889.png"
+                            src="21175.png"
                             />
 
                     </td>

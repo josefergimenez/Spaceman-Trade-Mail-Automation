@@ -63,14 +63,14 @@ const AlertCard: React.FC<Props> = ({
 export default AlertCard;
 
 const NAMES: { [key: string]: string } = {
-    21170: "https://mcusercontent.com/dd5cd43b1cf512f035a1166fc/images/ee0dcf02-6a37-ed9e-d75b-709a27823d99.png",
-    21175: "https://mcusercontent.com/dd5cd43b1cf512f035a1166fc/images/33a3bed5-c943-9c0b-caae-8227778e6889.png",
-    21181: "https://mcusercontent.com/dd5cd43b1cf512f035a1166fc/images/dd429c80-ee5d-5240-491e-fa5084b94154.png",
-    21187: "https://mcusercontent.com/dd5cd43b1cf512f035a1166fc/images/2848da88-cb23-cd4b-a3b6-7fd980019c7f.png",
-    21171: "https://mcusercontent.com/dd5cd43b1cf512f035a1166fc/images/a8fc35d6-15f5-3bfc-07ff-ada88dd130a6.png",
-    21176: "https://mcusercontent.com/dd5cd43b1cf512f035a1166fc/images/272967a3-495c-2b18-a8a0-4796dfbd3446.png",
-    21178: "https://mcusercontent.com/dd5cd43b1cf512f035a1166fc/images/dfd2e38e-4a82-0c8a-19ac-e3aab4254468.png",
-    21188: "https://mcusercontent.com/dd5cd43b1cf512f035a1166fc/images/0b35f388-1910-3cc3-2465-48b9d629b770.png",
+    21170: "/21170.png",
+    21175: "/21175.png",
+    21181: "/21181.png",
+    21187: "/21187.png",
+    21167: "/21167.png",
+    21150: "/21150.png",
+    21178: "/21178.png",
+    21189: "/21189.png",
 };
 
 function getUrlPorId(id: string): string{

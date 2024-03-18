@@ -19,7 +19,15 @@ type Props = {
     setEndDate12: (date: Date | null)=> void,
     setStartDate22: (date: Date | null)=> void,
     setEndDate22: (date: Date | null)=> void,
-    setIsFormActive: (val: boolean) => void 
+    setIsFormActive: (val: boolean) => void,
+    textDate1: string,
+    textDate2: string,
+    textDate3: string,
+    textDate4: string,
+    setTextDate1: (date: string) => void,
+    setTextDate2: (date: string) => void,
+    setTextDate3: (date: string) => void,
+    setTextDate4: (date: string) => void,
 
 }
 
@@ -41,14 +49,22 @@ const FormDate: React.FC<Props> = (
       setStartDate22,
       setEndDate12,
       setStartDate12,
-      setIsFormActive
+      setIsFormActive,
+      textDate1,
+      textDate2,
+      textDate3,
+      textDate4,
+      setTextDate1,
+      setTextDate2,
+      setTextDate3,
+      setTextDate4
     }) => {
 
 
   return (
     <form className="space-y-6 p-6">
       {/* Fecha 1 Range */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-3 gap-4">
         <div>
           <label className="text-sm font-semibold text-gray-600 block mb-2">FECHA 1 (DESDE):</label>
           <DatePicker
@@ -76,10 +92,19 @@ const FormDate: React.FC<Props> = (
             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
           />
         </div>
+        <div>
+          <label className="text-sm font-semibold text-gray-600 block mb-2">ETIQUETA:</label>
+            <input
+              type="text"
+              value={textDate1}
+              onChange={(e) => setTextDate1(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" 
+            />
+        </div>
       </div>
 
       {/* Fecha 2 Range */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-3 gap-4">
         <div>
           <label className="text-sm font-semibold text-gray-600 block mb-2">FECHA 2 (DESDE):</label>
           <DatePicker
@@ -107,9 +132,18 @@ const FormDate: React.FC<Props> = (
             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
           />
         </div>
+        <div>
+          <label className="text-sm font-semibold text-gray-600 block mb-2">ETIQUETA:</label>
+            <input
+              type="text"
+              value={textDate2}
+              onChange={(e) => setTextDate2(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" 
+            />
+        </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-3 gap-4">
         <div>
           <label className="text-sm font-semibold text-gray-600 block mb-2">FECHA 1 (DESDE):</label>
           <DatePicker
@@ -137,10 +171,19 @@ const FormDate: React.FC<Props> = (
             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
           />
         </div>
+        <div>
+            <label className="text-sm font-semibold text-gray-600 block mb-2">ETIQUETA: </label>
+            <input
+              type="text"
+              value={textDate3}
+              onChange={(e) => setTextDate3(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" 
+            />
+        </div>
       </div>
 
       {/* Fecha 2 Range */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-3 gap-4">
         <div>
           <label className="text-sm font-semibold text-gray-600 block mb-2">FECHA 2 (DESDE):</label>
           <DatePicker
@@ -168,6 +211,17 @@ const FormDate: React.FC<Props> = (
             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
           />
         </div>
+        <div>
+        <label className="text-sm font-semibold text-gray-600 block mb-2">ETIQUETA: </label>
+            <input
+              type="text"
+              value={textDate4}
+              onChange={(e) => setTextDate4(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" 
+            />
+        </div>
+
+
       </div>
       {/* Submit Button */}
       <div className="flex justify-center">

@@ -118,6 +118,14 @@ export default function App() {
           setStartDate22={setStartDate22}
           endDate22={endDate22}
           setEndDate22={setEndDate22}
+          textDate1={textDate1}
+          setTextDate1={setTextDate1}
+          textDate2={textDate2}
+          setTextDate2={setTextDate2}
+          textDate3={textDate3}
+          setTextDate3={setTextDate3}
+          textDate4={textDate4}
+          setTextDate4={setTextDate4}
         />
       </div>
  
@@ -465,27 +473,27 @@ export default function App() {
     <TableType1 
     title="Promedio Respete"
     zone="METRO"
-    fromDate={getPreviousMonthFormatted()}
-    toDate={getCurrentMonthFormatted()}
+    fromDate={textDate3}
+    toDate={textDate4}
     clusters={table2Latas.METRO}
     />
     <TableType1 
     title="Promedio Respete"
     zone="INTERIOR"
-    fromDate={getPreviousMonthFormatted()}
-    toDate={getCurrentMonthFormatted()}
+    fromDate={textDate3}
+    toDate={textDate4}
     clusters={table2Latas.INTERIOR}
     />
     <TableType2
      title="METRO"
-     fromDate={getPreviousMonthFormatted()}
-     toDate={getCurrentMonthFormatted()}
+     fromDate={textDate3}
+     toDate={textDate4}
      data={clusterWithProducts3}
      />
      <TableType2
      title="INTERIOR"
-     fromDate={getPreviousMonthFormatted()}
-     toDate={getCurrentMonthFormatted()}
+     fromDate={textDate3}
+     toDate={textDate4}
      data={clusterWithProducts4}
      />   
     <p className="mt-8 w-2/5 text-center items-center justify-center flex text-2xl font-bold text-primary">DISPERSIÓN</p>
