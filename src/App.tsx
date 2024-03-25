@@ -243,7 +243,7 @@ export default function App() {
                     }
 
                 const changePercentage = (producto.respeteAnterior != null) ? 
-                ((producto.respeteActual - producto.respeteAnterior)).toFixed(1) 
+                ((producto.respeteActual - producto.respeteAnterior)*100).toFixed(1) 
                 : "0.0";
                     
                 const alertObject = {
@@ -262,7 +262,7 @@ export default function App() {
                     }
 
                 const changePercentage = (producto.respeteAnterior != null) ? 
-                ((producto.respeteActual - producto.respeteAnterior)).toFixed(1) 
+                ((producto.respeteActual - producto.respeteAnterior)*100).toFixed(1) 
                 : "0.0";
                     
                 const alertObject = {
@@ -314,19 +314,19 @@ export default function App() {
     METROArray.forEach((item)=>{
         item.percentageOne = (item.respeteAnterior * 100).toFixed(1)
         item.percentageTwo = (item.respeteActual * 100).toFixed(1)
-        item.pp = ((item.percentageTwo-item.percentageOne)*100).toFixed(1)
+        item.pp = ((item.percentageTwo-item.percentageOne)).toFixed(1)
         })
     INTERIORArray.forEach((item)=>{
         item.percentageOne = (item.respeteAnterior * 100).toFixed(1)
         item.percentageTwo = (item.respeteActual * 100).toFixed(1)
-        item.pp = ((item.percentageTwo-item.percentageOne)*100).toFixed(1)
+        item.pp = ((item.percentageTwo-item.percentageOne)).toFixed(1)
         })
 
     //PARTE 3
      dataObject.forEach((item: any)=>{
         item.percentageOne = (item.respeteAnterior * 100).toFixed(1)
         item.percentageTwo = (item.respeteActual * 100).toFixed(1)
-        item.pp = ((item.percentageTwo-item.percentageOne)*100).toFixed(1)
+        item.pp = ((item.percentageTwo-item.percentageOne)).toFixed(1)
         })
 
     // return <div>{JSON.stringify(dataObject)}</div>
@@ -409,14 +409,7 @@ export default function App() {
     return (
     <div>  
     <div id="main" className="w-[600px] justify-items-center grid bg-white">
-        <Fragment>
-          {Object.keys(lataAlert).map((key) => (
-            <AlertCard
-              beers={lataAlert[key]}
-              zone={key}
-            />
-          ))}
-        </Fragment>
+
         <Fragment>
           {Object.keys(botellaAlert1).map((key) => (
             <AlertCard
@@ -425,6 +418,15 @@ export default function App() {
             />
           ))}
         </Fragment>
+        <Fragment>
+          {Object.keys(lataAlert).map((key) => (
+            <AlertCard
+              beers={lataAlert[key]}
+              zone={key}
+            />
+          ))}
+        </Fragment>
+
     
     <p className='text-[#082a39] mt-8'>
     En los cuadros de abajo podemos ver en detalle lo alertado anteriormente</p>
